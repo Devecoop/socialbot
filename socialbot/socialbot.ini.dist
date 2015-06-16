@@ -7,5 +7,5 @@ twitter_token = PUT YOUR TWITTER TOKEN
 twitter_secret = PUT YOUR TWITTER SECRET
 
 [moiner]
-user_email = 'user@example.com'
+user_email = user@example.com
 
