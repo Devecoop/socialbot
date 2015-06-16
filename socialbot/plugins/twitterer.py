@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from twitter import *
 
-from socialbot import get_config
+from socialbot.utils import get_config
 
 TWITTER_CONSUMER_KEY = 'uS6hO2sV6tDKIOeVjhnFnQ'
 TWITTER_CONSUMER_SECRET = 'MEYTOS97VvlHX7K1rwHPEqVpTSqZ71HtvoK4sVuYk'

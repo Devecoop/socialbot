@@ -3,8 +3,9 @@
 import cgi
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
-from socialbot import get_config
+from socialbot.utils import get_config
 
+import pdb;pdb.set_trace()
 config = get_config()
 MAGIC_KEYWORD = config.get('main', 'magic_keyword')
 
@@ -45,7 +46,8 @@ try:
     config = get_config()
     PORT_NUMBER = int(config.get('main', 'port'))
     # TODO: Read this from config file and import them accordingly
-    from socialbot.plugins import Twitterer, Moiner
+    from socialbot.plugins.twitterer import Twitterer
+    from socialbot.plugins.moiner import Moiner
     plugin_list = [Twitterer(), Moiner()]
 
     SlackBotHandler.plugin_list = plugin_list
