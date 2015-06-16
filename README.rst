@@ -2,8 +2,8 @@
 socialbot
 ===============================
 
-.. image:: https://img.shields.io/travis/skalanux/socialbot.svg
-        :target: https://travis-ci.org/skalanux/socialbot
+.. image:: https://img.shields.io/travis/Devecoop/socialbot.svg
+        :target: https://travis-ci.org/Devecoop/socialbot
 
 .. image:: https://img.shields.io/pypi/v/socialbot.svg
         :target: https://pypi.python.org/pypi/socialbot

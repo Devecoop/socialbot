@@ -29,7 +29,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Juan Manuel Schillaci",
     author_email='jmschillaci@gmail.com',
-    url='https://github.com/skalanux/socialbot',
+    url='https://github.com/Devecoop/socialbot',
     packages=[
         'socialbot',
     ],
