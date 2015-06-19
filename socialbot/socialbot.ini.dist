@@ -3,8 +3,8 @@ port = 3001
 magic_keyword = socialbot
 
 [twitter]
-twitter_token = PUT YOUR TWITTER TOKEN
-twitter_secret = PUT YOUR TWITTER SECRET
+token = PUT YOUR TWITTER TOKEN
+secret = PUT YOUR TWITTER SECRET
 
 [moiner]
 user_email = user@example.com

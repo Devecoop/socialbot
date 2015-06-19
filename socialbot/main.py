@@ -5,9 +5,12 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 from socialbot.utils import get_config
 
-import pdb;pdb.set_trace()
 config = get_config()
 MAGIC_KEYWORD = config.get('main', 'magic_keyword')
+
+# Add wiki directory just for now
+import sys
+sys.path.append("/srv/deploys/moinmoin/moin-1.9.7/")
 
 
 class SlackBotHandler(BaseHTTPRequestHandler):
@@ -15,6 +18,7 @@ class SlackBotHandler(BaseHTTPRequestHandler):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
 
+        import pdb;pdb.set_trace()
         try:
             postvars = cgi.parse_qs(post_body, keep_blank_values=1)
             user_name = postvars.get('user_name')[0]
@@ -33,7 +37,7 @@ class SlackBotHandler(BaseHTTPRequestHandler):
             action_string = " and ".join(actions)
 
             payload = '{"text" : "Thanks for the link, %s. It has been %s "}' % (user_name, action_string)
-        except:
+        except Exception as err:
             payload = '{"text" : "Sorry %s! Could not process link}' % user_name
 
         # Send the html message
@@ -48,7 +52,9 @@ try:
     # TODO: Read this from config file and import them accordingly
     from socialbot.plugins.twitterer import Twitterer
     from socialbot.plugins.moiner import Moiner
-    plugin_list = [Twitterer(), Moiner()]
+    #plugin_list = [Twitterer(), Moiner()]
+    #plugin_list = [Twitterer()]
+    plugin_list = [Moiner()]
 
     SlackBotHandler.plugin_list = plugin_list
     server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)

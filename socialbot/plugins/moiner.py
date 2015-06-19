@@ -1,19 +1,27 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-import MoinMoin.user
-from MoinMoin.PageEditor import PageEditor
+import cgi
+from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from MoinMoin.web.contexts import ScriptContext
+from MoinMoin.Page import Page
+from MoinMoin.PageEditor import PageEditor
+from MoinMoin import search
+import MoinMoin.user
+from twitter import *                                                               
 
-from socialbot import get_config
+from socialbot.utils import get_config
 
 
 class Moiner(object):
     ACTION_NAME = 'Wikied'
 
     def do(self, text):
+        import MoinMoin.user
+        from MoinMoin.PageEditor import PageEditor
+        from MoinMoin.web.contexts import ScriptContext
+
         config = get_config()
-        user_email = config.get('moiner', 'useremail')
+        user_email = config.get('moiner', 'user_email')
 
         request = ScriptContext()
         user = MoinMoin.user.get_by_email_address(request,
