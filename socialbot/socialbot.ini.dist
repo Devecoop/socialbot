@@ -6,6 +6,7 @@ magic_keyword = socialbot
 token = PUT YOUR TWITTER TOKEN
 secret = PUT YOUR TWITTER SECRET
 
-[moiner]
-user_email = user@example.com
+[relayer]
+url = http://127.0.0.1:3002 
+username = user@example.com
 
