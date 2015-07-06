@@ -16,7 +16,6 @@ class Twitterer(object):
         config = get_config()
         oauth_token = config.get('twitter', 'token')
         oauth_secret = config.get('twitter', 'secret')
-
         body = link + " " + text
 
         twitter = Twitter(

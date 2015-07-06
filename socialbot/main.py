@@ -10,17 +10,25 @@ MAGIC_KEYWORD = config.get('main', 'magic_keyword')
 
 
 class SlackBotHandler(BaseHTTPRequestHandler):
+    def _check_is_valid(self, url):
+        return True
+    def _sanitize(self, url):
+        return url
+
     def do_POST(self):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
-
         try:
             postvars = cgi.parse_qs(post_body, keep_blank_values=1)
             user_name = postvars.get('user_name')[0]
             content = postvars.get('text')[0]
-            raw_link = content.strip("{} <".format(MAGIC_KEYWORD)).rstrip(">")
-            link = raw_link.split("|")[0]
-            text = content.split(">")[1]
+            has_pipe = content.find("|")
+            has_less = content.find("<")
+            if has_pipe!=-1 or has_less==-1:
+                raise Exception("Invalid Link format")
+
+            raw_link = content.strip("{} <".format(MAGIC_KEYWORD))
+            link, text = raw_link.split(">")
             # TODO: Change this, so it can return an status for each of
             # the actions
             map(lambda x:x.do(text, link), self.plugin_list)
@@ -40,21 +48,21 @@ class SlackBotHandler(BaseHTTPRequestHandler):
 
         return
 
-try:
-    #Create a web server and define the handler to manage the
-    #incoming request
-    config = get_config()
-    PORT_NUMBER = int(config.get('main', 'port'))
-    # TODO: Read this from config file and import them accordingly
-    from socialbot.plugins.twitterer import Twitterer
-    from socialbot.plugins.relayer import Relayer
-    #plugin_list = [Twitterer()]
-    plugin_list = [Relayer(), Twitterer()]
-
-    SlackBotHandler.plugin_list = plugin_list
-    server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)
-    print 'Started httpserver on port ', PORT_NUMBER
-    server.serve_forever()
-except KeyboardInterrupt:
-    print '^C received, shutting down the web server'
-    server.socket.close()
+if __name__=='__main__':
+    try:
+        #Create a web server and define the handler to manage the
+        #incoming request
+        config = get_config()
+        PORT_NUMBER = int(config.get('main', 'port'))
+        # TODO: Read this from config file and import them accordingly
+        from socialbot.plugins.twitterer import Twitterer
+        from socialbot.plugins.relayer import Relayer
+        plugin_list = [Relayer(), Twitterer()]
+        #plugin_list = [Relayer()]
+        SlackBotHandler.plugin_list = plugin_list
+        server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)
+        print 'Started httpserver on port ', PORT_NUMBER
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print '^C received, shutting down the web server'
+        server.socket.close()
