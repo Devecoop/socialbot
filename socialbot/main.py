@@ -18,6 +18,8 @@ class SlackBotHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_len = int(self.headers.getheader('content-length', 0))
         post_body = self.rfile.read(content_len)
+        payload = None
+        user_name = None
         try:
             postvars = cgi.parse_qs(post_body, keep_blank_values=1)
             user_name = postvars.get('user_name')[0]
@@ -57,8 +59,8 @@ if __name__=='__main__':
         # TODO: Read this from config file and import them accordingly
         from socialbot.plugins.twitterer import Twitterer
         from socialbot.plugins.relayer import Relayer
-        plugin_list = [Relayer(), Twitterer()]
-        #plugin_list = [Relayer()]
+        from socialbot.plugins.facebook_plugin import FacebookPlugin
+        plugin_list = [Relayer(), Twitterer(),FacebookPlugin()]
         SlackBotHandler.plugin_list = plugin_list
         server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)
         print 'Started httpserver on port ', PORT_NUMBER

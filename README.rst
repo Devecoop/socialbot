@@ -18,3 +18,13 @@ Features
 --------
 
 * TODO
+
+Development installation
+------------------------
+- Copy/create the ini file to ~/.config/socialbot/socialbot.ini
+   (from socialbot/socialbot.ini.dist)
+
+- Run these commands:
+    mkvirtualenv socialbot (first you must install virtualenvwrapper)
+    pip install -r requirements.txt
+    python setup.py develop

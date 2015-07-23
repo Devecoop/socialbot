@@ -6,7 +6,9 @@ magic_keyword = socialbot
 token = PUT YOUR TWITTER TOKEN
 secret = PUT YOUR TWITTER SECRET
 
-[relayer]
-url = http://127.0.0.1:3002 
-username = user@example.com
+[facebook]
+accestoken = PUT YOUR FACEBOOK ACCESS TOKEN
 
+[relayer]
+url = http://127.0.0.1:3002
+username = user@example.com
