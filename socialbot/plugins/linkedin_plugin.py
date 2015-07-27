@@ -12,7 +12,7 @@ API_SECRET = 'IlVYmc1vysepzZh7'
 RETURN_URL = 'https://devecoop.slack.com/'
 
 
-class Twitterer(object):
+class LinkedinPlugin(object):
     ACTION_NAME = 'Linkedin-post'
 
     def do(self, text, link):
