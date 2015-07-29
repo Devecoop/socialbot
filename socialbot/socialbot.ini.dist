@@ -7,7 +7,12 @@ token = PUT YOUR TWITTER TOKEN
 secret = PUT YOUR TWITTER SECRET
 
 [facebook]
-accestoken = PUT YOUR FACEBOOK ACCESS TOKEN
+access_token = PUT YOUR FACEBOOK ACCESS TOKEN
+
+[linkedin]
+access_token = PUT YOUR TOKEN (you can generate a ACCESS_TOKEN with: python  plugins/linkedin_plugin.py)
+company_id = PUT YOUR COMPANY ID
+
 
 [relayer]
 url = http://127.0.0.1:3002

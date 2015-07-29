@@ -28,3 +28,6 @@ Development installation
     mkvirtualenv socialbot (first you must install virtualenvwrapper)
     pip install -r requirements.txt
     python setup.py develop
+
+(activar el virtualenv)    
+- workon socialbot

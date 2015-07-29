@@ -9,7 +9,7 @@ class FacebookPlugin(object):
 
     def do(self, text, link):
         config = get_config()
-        access_token = config.get('facebook', 'accesstoken')
+        access_token = config.get('facebook', 'access_token')
         graph = facebook.GraphAPI(access_token)
 
         attachment =  {
