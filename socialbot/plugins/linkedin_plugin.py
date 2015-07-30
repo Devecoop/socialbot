@@ -14,7 +14,7 @@ import requests
 import json
 
 from linkedin import linkedin, server
-from socialbot.utils import get_config
+from socialbot.utils import get_config, save_to_config
 
 def make_request(method, url, token ,data=None, params=None, headers=None, timeout=60):
     headers = {'x-li-format': 'json', 'Content-Type': 'application/json'}
@@ -46,11 +46,12 @@ class LinkedinPlugin(object):
 
         print '\nCOPIAR Y ABRIR ESTA URL EN EL NAVEGADOR: \n' + authentication.authorization_url
         print '\nHACE LOGIN y copia el CODE \n'
-        print 'SETEA EL CODE asi authentication.authorization_code = \'<poner code aca>\'  \n'
-        #print authenticatio.access_url
-        import pdb; pdb.set_trace()
+        #TODO Escuchar el parametro RETURN_URL y buscar el arg code, podría llegar a haber error, si lo tiene setear la variable autorization_code
+
+        authentication.authorization_code = raw_input('Ingresar el CODE: ')
         token = authentication.get_access_token()
         print '\nEl ACCESS_TOKEN:\n ' + str(token)
+        save_to_config('linkedin', 'access_token', token.access_token)
         print '\n(Por default tiene validez por 60 dias)'
 
     def submit_share(self,comment):
