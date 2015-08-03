@@ -1,11 +1,11 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import facebook
 from socialbot.utils import get_config
 
+
 class FacebookPlugin(object):
-    ACTION_NAME = 'Facebooked'
+    ACTION_NAME = 'Posted on facebook'
 
     def do(self, text, link):
         config = get_config()
