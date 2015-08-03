@@ -21,13 +21,22 @@ Features
 
 Development installation
 ------------------------
-- Copy/create the ini file to ~/.config/socialbot/socialbot.ini
+
+* Copy/create the ini file to ~/.config/socialbot/socialbot.ini
    (from socialbot/socialbot.ini.dist)
 
-- Run these commands:
-    mkvirtualenv socialbot (first you must install virtualenvwrapper)
-    pip install -r requirements.txt
-    python setup.py develop
+* Create and activate the development environment:
 
-(activar el virtualenv)    
-- workon socialbot
+```
+$ pip install virtualenvwrapper
+$ mkvirtualenv socialbot
+$ pip install -r requirements.txt
+$ python setup.py development
+```
+
+* Every time you need to work on the project just activate the environment:
+
+```
+$ workon socialbot
+```
+
