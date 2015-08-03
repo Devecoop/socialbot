@@ -5,10 +5,10 @@
 #
 # Steps to generate a access token
 # 1) Go to linkedin and create an application
-# 2) Generate a API_KEY, API_SECRET and set the RETURN_URL
-# 3) run in a console: python socialbot/plugins/Linkedin_plugin.py
+# 2) Generate an API_KEY, API_SECRET and set the RETURN_URL
+# 3) run in a console: python socialbot/plugins/linkediner.py
 #    and follow the Steps
-# 4) Copy the access token in the socialbot.ini file
+# 4) Copy the access token into the socialbot.ini file
 
 import json
 
@@ -18,7 +18,6 @@ from linkedin import linkedin, server
 from socialbot.utils import get_config, save_to_config
 
 COMPANY_URL = "https://api.linkedin.com/v1/companies/{}/shares"
-
 
 
 class Linkediner(object):
@@ -32,12 +31,13 @@ class Linkediner(object):
 
     def get_access_token(self):
         config = get_config()
-        API_KEY = config.get('linkedin','api_key')
-        API_SECRET = config.get('linkedin','api_secret')
-        RETURN_URL = config.get('linkedin','return_url')
+        client_id = config.get('linkedin','client_id')
+        client_secret = config.get('linkedin','client_secret')
+        return_url = config.get('linkedin','return_url')
 
         permissions = ['r_basicprofile','w_share','rw_company_admin']
-        authentication = linkedin.LinkedInAuthentication(API_KEY, API_SECRET, RETURN_URL,permissions)
+        authentication = linkedin.LinkedInAuthentication(client_id, client_secret,
+                                                         return_url,permissions)
         app = linkedin.LinkedInApplication(authentication)
         print '**************************************\n'
         print '  PROCESS TO OBTAIN THE ACCESS_TOKEN  \n'
@@ -54,7 +54,7 @@ class Linkediner(object):
         save_to_config('linkedin', 'access_token', token.access_token)
         print '\n(By default is valid for 60 days only.)'
 
-    def submit_share(self,comment):
+    def submit_share(self, comment):
         config = get_config()
         access_token = config.get('linkedin','access_token')
         company_id = config.get('linkedin','company_id')

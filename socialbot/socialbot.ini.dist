@@ -10,9 +10,11 @@ secret = PUT YOUR TWITTER SECRET
 access_token = PUT YOUR FACEBOOK ACCESS TOKEN
 
 [linkedin]
+client_id = PUT YOUR CLIENT ID
+clent_secret = PUT YOUR CLIENT SECRET
 access_token = PUT YOUR TOKEN (you can generate an ACCESS_TOKEN with: python  plugins/linkediner.py)
 company_id = PUT YOUR COMPANY ID
-
+return_url = PUT A VALID RETUN URL
 
 [relayer]
 url = http://127.0.0.1:3002
