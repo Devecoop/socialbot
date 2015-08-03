@@ -4,7 +4,7 @@ import facebook
 from socialbot.utils import get_config
 
 
-class FacebookPlugin(object):
+class Facebooker(object):
     ACTION_NAME = 'Posted on facebook'
 
     def do(self, text, link):

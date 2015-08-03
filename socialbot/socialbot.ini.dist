@@ -10,7 +10,7 @@ secret = PUT YOUR TWITTER SECRET
 access_token = PUT YOUR FACEBOOK ACCESS TOKEN
 
 [linkedin]
-access_token = PUT YOUR TOKEN (you can generate a ACCESS_TOKEN with: python  plugins/linkedin_plugin.py)
+access_token = PUT YOUR TOKEN (you can generate an ACCESS_TOKEN with: python  plugins/linkediner.py)
 company_id = PUT YOUR COMPANY ID
 
 

@@ -59,9 +59,9 @@ if __name__=='__main__':
         # TODO: Read this from config file and import them accordingly
         from socialbot.plugins.twitterer import Twitterer
         from socialbot.plugins.relayer import Relayer
-        from socialbot.plugins.facebook_plugin import FacebookPlugin
-        from socialbot.plugins.linkedin_plugin import LinkedinPlugin
-        plugin_list = [Relayer(), Twitterer(),FacebookPlugin(), LinkedinPlugin()}]
+        from socialbot.plugins.facebooker import Facebooker
+        from socialbot.plugins.linkediner import Linkediner
+        plugin_list = [Relayer(), Twitterer(), Facebooker(), Linkediner()]
         SlackBotHandler.plugin_list = plugin_list
         server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)
         print 'Started httpserver on port ', PORT_NUMBER

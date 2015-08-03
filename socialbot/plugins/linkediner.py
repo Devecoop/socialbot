@@ -10,28 +10,27 @@
 #    and follow the Steps
 # 4) Copy the access token in the socialbot.ini file
 
-import requests
 import json
+
+import requests
 
 from linkedin import linkedin, server
 from socialbot.utils import get_config, save_to_config
 
-def make_request(method, url, token ,data=None, params=None, headers=None, timeout=60):
-    headers = {'x-li-format': 'json', 'Content-Type': 'application/json'}
-    params = {}
-    kw = dict(data=data, params=params, headers=headers, timeout=timeout)
-    params.update({'oauth2_access_token': token})
-    return requests.request(method.upper(), url, **kw)
+COMPANY_URL = "https://api.linkedin.com/v1/companies/{}/shares"
 
 
-class LinkedinPlugin(object):
-    ACTION_NAME = 'Linkedin-post'
 
-    def do(self, text,link):
-        body = link + " " + text
-        response = self.submit_share(body)
+class Linkediner(object):
+    ACTION_NAME = 'posted on Linkedin'
+    def _make_request(self, method, url, token ,data=None, params=None, headers=None, timeout=60):
+        headers = {'x-li-format': 'json', 'Content-Type': 'application/json'}
+        params = {}
+        kw = dict(data=data, params=params, headers=headers, timeout=timeout)
+        params.update({'oauth2_access_token': token})
+        return requests.request(method.upper(), url, **kw)
 
-    def doGetAccessToken(self):
+    def get_access_token(self):
         config = get_config()
         API_KEY = config.get('linkedin','api_key')
         API_SECRET = config.get('linkedin','api_secret')
@@ -41,18 +40,19 @@ class LinkedinPlugin(object):
         authentication = linkedin.LinkedInAuthentication(API_KEY, API_SECRET, RETURN_URL,permissions)
         app = linkedin.LinkedInApplication(authentication)
         print '**************************************\n'
-        print 'PROCESO PARA OBTENER EL ACCESS_TOKEN \n'
+        print '  PROCESS TO OBTAIN THE ACCESS_TOKEN  \n'
         print '**************************************\n'
 
-        print '\nCOPIAR Y ABRIR ESTA URL EN EL NAVEGADOR: \n' + authentication.authorization_url
-        print '\nHACE LOGIN y copia el CODE \n'
-        #TODO Escuchar el parametro RETURN_URL y buscar el arg code, podría llegar a haber error, si lo tiene setear la variable autorization_code
+        print '\nCopy and then open this URL on your browser: \n' + authentication.authorization_url
+        print '\nThen login and paste the CODE \n'
+        # TODO: Listen RETURN_URL parameter and look for the arg code
+        # An error can ocurr, in that case, set the autorization_code variable
 
-        authentication.authorization_code = raw_input('Ingresar el CODE: ')
+        authentication.authorization_code = raw_input('Input CODE: ')
         token = authentication.get_access_token()
-        print '\nEl ACCESS_TOKEN:\n ' + str(token)
+        print '\nACCESS_TOKEN:\n ' + str(token)
         save_to_config('linkedin', 'access_token', token.access_token)
-        print '\n(Por default tiene validez por 60 dias)'
+        print '\n(By default is valid for 60 days only.)'
 
     def submit_share(self,comment):
         config = get_config()
@@ -64,14 +64,21 @@ class LinkedinPlugin(object):
                     'code': 'anyone'
                 }
             }
-        url = 'https://api.linkedin.com/v1/companies/'+COMPANY_ID+'/shares'
+        url = COMPANY_URL.format(company_id)
+
         try:
-            response = make_request('POST', url, ACCESS_TOKEN,data=json.dumps(post))
+            response = self.make_request('POST', url, access_token,
+                                         data=json.dumps(post))
             response = response.json()
             return response
         except Exception:
             return False
 
+    def do(self, text,link):
+        body = link + " " + text
+        response = self.submit_share(body)
+
+
 if __name__=="__main__":
-    plugin = LinkedinPlugin()
-    plugin.doGetAccessToken()
+    plugin = Linkediner()
+    plugin.get_access_token()
