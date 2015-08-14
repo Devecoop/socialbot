@@ -67,11 +67,12 @@ class Linkediner(object):
         url = COMPANY_URL.format(company_id)
 
         try:
-            response = self.make_request('POST', url, access_token,
+            response = self._make_request('POST', url, access_token,
                                          data=json.dumps(post))
             response = response.json()
             return response
-        except Exception:
+        except Exception as err:
+            print err
             return False
 
     def do(self, text,link):

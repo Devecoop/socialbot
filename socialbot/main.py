@@ -61,7 +61,12 @@ if __name__=='__main__':
         from socialbot.plugins.relayer import Relayer
         from socialbot.plugins.facebooker import Facebooker
         from socialbot.plugins.linkediner import Linkediner
-        plugin_list = [Relayer(), Twitterer(), Facebooker(), Linkediner()]
+        plugin_list = [
+                       Relayer(),
+                       Twitterer(),
+                       Linkediner(),
+                       #Facebooker(),
+                        ]
         SlackBotHandler.plugin_list = plugin_list
         server = HTTPServer(('', PORT_NUMBER), SlackBotHandler)
         print 'Started httpserver on port ', PORT_NUMBER
