@@ -7,6 +7,9 @@ from socialbot.utils import get_config
 class Relayer(object):
     ACTION_NAME = 'Posted'
 
+    def validate(self, text, link):
+        return True
+
     def do(self, text, link):
         config = get_config()
         relayer = config.get('relayer', 'url')

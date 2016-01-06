@@ -22,7 +22,7 @@ COMPANY_URL = "https://api.linkedin.com/v1/companies/{}/shares"
 
 class Linkediner(object):
     ACTION_NAME = 'posted on Linkedin'
-    def _make_request(self, method, url, token ,data=None, params=None, headers=None, timeout=60):
+    def _make_request(self, method, url, token, data=None, params=None, headers=None, timeout=60):
         headers = {'x-li-format': 'json', 'Content-Type': 'application/json'}
         params = {}
         kw = dict(data=data, params=params, headers=headers, timeout=timeout)
@@ -31,11 +31,11 @@ class Linkediner(object):
 
     def get_access_token(self):
         config = get_config()
-        client_id = config.get('linkedin','client_id')
-        client_secret = config.get('linkedin','client_secret')
-        return_url = config.get('linkedin','return_url')
+        client_id = config.get('linkedin', 'client_id')
+        client_secret = config.get('linkedin', 'client_secret')
+        return_url = config.get('linkedin', 'return_url')
 
-        permissions = ['r_basicprofile','w_share','rw_company_admin']
+        permissions = ['r_basicprofile', 'w_share', 'rw_company_admin']
         authentication = linkedin.LinkedInAuthentication(client_id, client_secret,
                                                          return_url,permissions)
         app = linkedin.LinkedInApplication(authentication)
@@ -56,8 +56,8 @@ class Linkediner(object):
 
     def submit_share(self, comment):
         config = get_config()
-        access_token = config.get('linkedin','access_token')
-        company_id = config.get('linkedin','company_id')
+        access_token = config.get('linkedin', 'access_token')
+        company_id = config.get('linkedin', 'company_id')
         post = {
                 'comment': comment,
                 'visibility': {
@@ -75,11 +75,14 @@ class Linkediner(object):
             print err
             return False
 
-    def do(self, text,link):
+    def validate(self, text, link):
+        return True
+
+    def do(self, text, link):
         body = link + " " + text
         response = self.submit_share(body)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     plugin = Linkediner()
     plugin.get_access_token()

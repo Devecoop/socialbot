@@ -17,16 +17,23 @@ TWITTER_CONSUMER_KEY = 'uS6hO2sV6tDKIOeVjhnFnQ'
 TWITTER_CONSUMER_SECRET = 'MEYTOS97VvlHX7K1rwHPEqVpTSqZ71HtvoK4sVuYk'
 
 
-
-
 class Twitterer(object):
     ACTION_NAME = 'Twitted'
+
+    def create_body(self, text, link):
+        return link + " " + text
+
+    def validate(self, text, link):
+        body = self.create_body(text, link)
+        if len(body) > 140:
+            raise Exception("Message too long for Twitter (140 max).")
+        return True
 
     def do(self, text, link):
         config = get_config()
         oauth_token = config.get('twitter', 'token')
         oauth_secret = config.get('twitter', 'secret')
-        body = link + " " + text
+        body = self.create_body(text, link)
 
         twitter = Twitter(
             auth=OAuth(

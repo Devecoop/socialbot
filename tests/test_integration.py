@@ -16,8 +16,28 @@ import requests
 from socialbot.main import SlackBotHandler
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
+class TestSocialbotIntegration(unittest.TestCase):
+    def setUp(self):
+        print('---- setup start')
+        self.httpd = HTTPServer(('', 8081), SlackBotHandler)
 
-class TestSocialbot(unittest.TestCase):
+        print('---- setting plugins')
+        SlackBotHandler.plugin_list = [FacebookPlugin()]
+
+        threading.Thread(target=self.serve).start()
+        print('---- setup complete')
+
+    def serve(self):
+        try:
+            self.httpd.serve_forever()
+        finally:
+            self.httpd.server_close()
+
+    def tearDown(self):
+        print('---- teardown start')
+        self.httpd.shutdown()
+        print('---- teardown complete')
+
     def test_integration_valid_url_with_text(self):
         result = requests.post('http://127.0.0.1:3001', 
                                {'user_name':'ska', 
