@@ -25,7 +25,7 @@ Development installation
 $ pip install virtualenvwrapper
 $ mkvirtualenv socialbot
 $ pip install -r requirements.txt
-$ python setup.py development
+$ python setup.py develop
 ```
 
 * Every time you need to work on the project just activate the environment:
